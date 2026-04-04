@@ -1,3 +1,18 @@
+#ifndef ROBOT_CONFIG_H/Users/Ricky/Documents/GitHub/HRDW-Microbot/robot_library/library.properties
+#define ROBOT_CONFIG_H
+
+// ============================================
+// Конфигурация пинов ESP32S3-N16R8
+// ============================================
+
+// Камера OV5640 (DFRobot AI CAM)
+#define CAMERA_PIN_PCLK     15
+#define CAMERA_PIN_VSYNC    1
+#define CAMERA_PIN_HREF     2
+#define CAMERA_PIN_SIOD     8  // SDA
+#define CAMERA_PIN_SIOC     9  // SCL
+#define CAMERA_PIN_D7       7
+#define CAMERA_PIN_D6       14
 #define CAMERA_PIN_D5       17
 #define CAMERA_PIN_D4       21
 #define CAMERA_PIN_D3       18
