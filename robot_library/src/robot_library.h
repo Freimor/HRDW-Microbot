@@ -2,6 +2,7 @@
 #define ROBOT_LIBRARY_H
 
 #include "Arduino.h"
+#include "Wire.h"
 #include "robot_config.h"
 
 // ============================================
