@@ -1,0 +1,27 @@
+{
+  "name": "RobotLibrary",
+  "version": "1.0.0",
+  "description": "HRDW Microbot Robot Library for ESP32S3",
+  "keywords": "robot, esp32, motor, sensor, camera",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "authors": [
+    {
+      "name": "HRDW",
+      "email": "",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "dependencies": {
+    "adafruit/Adafruit ADS1X15": "^2.4.0",
+    "adafruit/Adafruit VL53L0X": "^1.2.3",
+    "adafruit/Adafruit LTR329 LTR308 Library": "^2.1.5",
+    "fastled/FastLED": "^3.7.0"
+  },
+  "frameworks": "arduino",
+  "platforms": "espressif32"
+}

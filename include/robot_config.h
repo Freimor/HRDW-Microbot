@@ -1,75 +1,74 @@
 #ifndef ROBOT_CONFIG_H
 #define ROBOT_CONFIG_H
 
+#include <Arduino.h>
+
 // ============================================
-// Конфигурация пинов ESP32S3-N16R8
+// ESP32S3-N16R8 Pin Configuration for HRDW Microbot
 // ============================================
 
-// Камера OV5640 (DFRobot AI CAM)
-#define CAMERA_PIN_PCLK     40
-#define CAMERA_PIN_VSYNC    41
-#define CAMERA_PIN_HREF     39
-#define CAMERA_PIN_SIOD     18  // SDA
-#define CAMERA_PIN_SIOC     38  // SCL
-#define CAMERA_PIN_D7       48
-#define CAMERA_PIN_D6       47
-#define CAMERA_PIN_D5       1
-#define CAMERA_PIN_D4       2
-#define CAMERA_PIN_D3       42
-#define CAMERA_PIN_D2       43
-#define CAMERA_PIN_D1       44
-#define CAMERA_PIN_D0       45
-#define CAMERA_PIN_XCLK     0
+// --- Camera OV5640 (DFRobot AI CAM) ---
+#define CAMERA_PIN_PWDN     -1
+#define CAMERA_PIN_RESET    45
+#define CAMERA_PIN_XCLK     47
+#define CAMERA_PIN_SIOD     41
+#define CAMERA_PIN_SIOC     40
+#define CAMERA_PIN_D7       39
+#define CAMERA_PIN_D6       38
+#define CAMERA_PIN_D5       37
+#define CAMERA_PIN_D4       36
+#define CAMERA_PIN_D3       35
+#define CAMERA_PIN_D2       34
+#define CAMERA_PIN_D1       33
+#define CAMERA_PIN_D0       32
+#define CAMERA_PIN_VSYNC    46
+#define CAMERA_PIN_HREF     48
+#define CAMERA_PIN_PCLK     49
 
-// Battery Monitor LC709203F
-#define BATTERY_MONITOR_I2C_SDA   18
-#define BATTERY_MONITOR_I2C_SCL   38
+// --- Battery Monitor LC709203F (I2C) ---
 #define BATTERY_MONITOR_I2C_ADDR  0x0B
 
-// ADC ADS1015 для фоторезисторов
-#define ADS1015_I2C_SDA     18
-#define ADS1015_I2C_SCL     38
-#define ADS1015_I2C_ADDR    0x48
+// --- ADC ADS1015 for Photoresistors (I2C) ---
+#define PHOTO_ADC_I2C_ADDR        0x48
+#define PHOTO_ADC_GAIN            GAIN_TWOTHIRDS
 
-// Датчики линии GP25700 (4 шт)
-#define LINE_SENSOR_1_PIN   3
-#define LINE_SENSOR_2_PIN   46
-#define LINE_SENSOR_3_PIN   5
-#define LINE_SENSOR_4_PIN   6
+// --- Line Sensors GP25700 (4 sensors) ---
+#define LINE_SENSOR_1_PIN         1
+#define LINE_SENSOR_2_PIN         2
+#define LINE_SENSOR_3_PIN         3
+#define LINE_SENSOR_4_PIN         4
 
-// Контроллер двигателей DRV8834 с энкодерами OH137
-#define MOTOR_LEFT_PWM      7
-#define MOTOR_LEFT_IN1      8
-#define MOTOR_LEFT_IN2      9
-#define MOTOR_RIGHT_PWM     10
-#define MOTOR_RIGHT_IN1     11
-#define MOTOR_RIGHT_IN2     12
+// --- Motor Controller DRV8834 ---
+#define MOTOR_LEFT_PWM            5
+#define MOTOR_LEFT_IN1            6
+#define MOTOR_LEFT_IN2            7
+#define MOTOR_RIGHT_PWM           8
+#define MOTOR_RIGHT_IN1           9
+#define MOTOR_RIGHT_IN2           10
 
-// Энкодеры
-#define ENCODER_LEFT_A      13
-#define ENCODER_LEFT_B      14
-#define ENCODER_RIGHT_A     15
-#define ENCODER_RIGHT_B     16
+// --- Motor Encoders OH137 ---
+#define ENCODER_LEFT_A            11
+#define ENCODER_LEFT_B            12
+#define ENCODER_RIGHT_A           13
+#define ENCODER_RIGHT_B           14
 
-// TOF дальномер VL53L0X
-#define TOF_I2C_SDA         18
-#define TOF_I2C_SCL         38
-#define TOF_I2C_ADDR        0x29
-#define TOF_XSHUT_PIN       17
+// --- TOF Laser Rangefinder VL53L0X (I2C) ---
+#define TOF_I2C_ADDR              0x29
+#define TOF_XSHUT_PIN             15
 
-// Цифровой датчик освещенности LTR-308
-#define LTR308_I2C_SDA      18
-#define LTR308_I2C_SCL      38
-#define LTR308_I2C_ADDR     0x53
+// --- Digital Light Sensor LTR-308 (I2C) ---
+#define LIGHT_SENSOR_I2C_ADDR     0x53
 
-// Адресные светодиоды SK6812
-#define LED_STRIP_PIN       21
-#define LED_STRIP_COUNT     4
+// --- Addressable LEDs SK6812 (4 LEDs) ---
+#define LED_DATA_PIN              16
+#define LED_COUNT                 4
 
-// Buzzer
-#define BUZZER_PIN          22
+// --- Buzzer ---
+#define BUZZER_PIN                17
 
-// I2C общие настройки
-#define I2C_FREQUENCY       400000
+// --- I2C Configuration ---
+#define I2C_SDA_PIN               18
+#define I2C_SCL_PIN               19
+#define I2C_FREQUENCY             400000
 
-#endif // ROBOT_CONFIG_H
+#endif
