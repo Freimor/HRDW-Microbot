@@ -1,174 +1,131 @@
 #ifndef ROBOT_LIBRARY_H
 #define ROBOT_LIBRARY_H
 
-#include "Arduino.h"
+#include <Arduino.h>
+#include <Wire.h>
 #include "robot_config.h"
 
-// ============================================
-// Структуры данных
-// ============================================
+// Forward declarations for library dependencies
+class Adafruit_ADS1015;
+class Adafruit_VL53L0X;
+class Adafruit_LTR308;
+class ESP32Camera;
 
-typedef struct {
-    int16_t left;
-    int16_t right;
-} EncoderData;
+struct PhotoResistorData {
+    uint16_t ch0, ch1, ch2, ch3;
+};
 
-typedef struct {
-    uint16_t ch0;
-    uint16_t ch1;
-    uint16_t ch2;
-    uint16_t ch3;
-} PhotoResistorData;
+struct LineSensorData {
+    bool s1, s2, s3, s4;
+    float position;  // -1.0 to 1.0
+};
 
-typedef struct {
-    bool sensor1;
-    bool sensor2;
-    bool sensor3;
-    bool sensor4;
-} LineSensorData;
+struct EncoderData {
+    long left, right;
+};
 
-typedef struct {
-    float distance_mm;
-    bool valid;
-} TOFData;
-
-typedef struct {
-    float lux;
-    bool valid;
-} LightSensorData;
-
-typedef struct {
-    float battery_voltage;
-    float battery_percentage;
+struct BatteryData {
+    float voltage;
+    float percentage;
     bool charging;
-    bool valid;
-} BatteryData;
-
-// ============================================
-// Класс RobotLibrary
-// ============================================
+};
 
 class RobotLibrary {
+private:
+    TwoWire* _i2c;
+    
+    // Camera
+    ESP32Camera* _camera;
+    bool _cameraInitialized;
+    
+    // ADS1015
+    Adafruit_ADS1015* _ads;
+    bool _adsInitialized;
+    
+    // VL53L0X
+    Adafruit_VL53L0X* _tof;
+    bool _tofInitialized;
+    
+    // LTR-308
+    Adafruit_LTR308* _lightSensor;
+    bool _lightInitialized;
+    
+    // LEDs
+    uint8_t _leds[LED_COUNT][3];
+    
+    // Encoders
+    volatile long _leftEncoderCount;
+    volatile long _rightEncoderCount;
+    
+    // Motor pins
+    uint8_t _motorLeftPwm, _motorLeftIn1, _motorLeftIn2;
+    uint8_t _motorRightPwm, _motorRightIn1, _motorRightIn2;
+    
+    // Buzzer
+    uint8_t _buzzerPin;
+    
+    // Line sensors
+    uint8_t _linePins[4];
+    
+    void _updateEncoderLeft();
+    void _updateEncoderRight();
+    
 public:
     RobotLibrary();
     
-    // Инициализация всех компонентов
     bool begin();
     
-    // ========================================
-    // Камера OV5640
-    // ========================================
+    // Camera functions
     bool cameraInit();
     bool cameraCapture();
     void cameraDeinit();
     
-    // ========================================
-    // Battery Monitor LC709203F
-    // ========================================
-    bool batteryInit();
-    BatteryData getBatteryData();
+    // Battery functions
     float getBatteryVoltage();
     float getBatteryPercentage();
     bool isCharging();
+    BatteryData getBatteryData();
     
-    // ========================================
-    // Фоторезисторы через ADS1015
-    // ========================================
-    bool photoResistorsInit();
+    // Photoresistors (ADS1015)
     PhotoResistorData getPhotoResistorData();
     uint16_t getPhotoResistorValue(uint8_t channel);
     
-    // ========================================
-    // Датчики линии GP25700
-    // ========================================
-    bool lineSensorsInit();
+    // Line sensors
     LineSensorData getLineSensorData();
-    bool getLineSensorValue(uint8_t sensorNum);
-    uint8_t getLinePosition(); // Возвращает позицию 0-3 или 255 если нет линии
+    float getLinePosition();
     
-    // ========================================
-    // Контроллер двигателей DRV8834 с энкодерами
-    // ========================================
-    bool motorsInit();
-    void setMotorSpeed(int16_t leftSpeed, int16_t rightSpeed);
-    void setLeftMotorSpeed(int16_t speed);
-    void setRightMotorSpeed(int16_t speed);
+    // Motors
+    void setMotorSpeed(int16_t left, int16_t right);
     void stopMotors();
+    void setLeftMotor(int16_t speed);
+    void setRightMotor(int16_t speed);
+    
+    // Encoders
     EncoderData getEncoderData();
-    int32_t getLeftEncoderCount();
-    int32_t getRightEncoderCount();
+    long getLeftEncoderCount();
+    long getRightEncoderCount();
     void resetEncoders();
     
-    // ========================================
-    // TOF дальномер VL53L0X
-    // ========================================
-    bool tofInit();
-    TOFData getTOFData();
+    // TOF distance sensor
     uint16_t getDistanceMM();
     bool isDistanceValid();
     
-    // ========================================
-    // Цифровой датчик освещенности LTR-308
-    // ========================================
-    bool lightSensorInit();
-    LightSensorData getLightSensorData();
+    // Light sensor (LTR-308)
     float getLux();
     bool isLightValid();
     
-    // ========================================
-    // Адресные светодиоды SK6812
-    // ========================================
-    bool ledsInit();
+    // LEDs (SK6812)
     void setLedColor(uint8_t index, uint8_t r, uint8_t g, uint8_t b);
     void setAllLedsColor(uint8_t r, uint8_t g, uint8_t b);
-    void clearLeds();
     void showLeds();
-    void setLedBrightness(uint8_t brightness); // 0-255
+    void clearLeds();
     
-    // ========================================
     // Buzzer
-    // ========================================
-    bool buzzerInit();
-    void beep(uint16_t frequency, uint16_t duration_ms);
-    void playTone(uint16_t frequency, uint16_t duration_ms);
+    void beep(uint16_t frequency, uint16_t duration);
+    void playTone(uint16_t frequency, uint16_t duration);
     void stopBuzzer();
-    
-    // ========================================
-    // Утилиты
-    // ========================================
-    void delayMs(uint32_t ms);
-    uint32_t getMillis();
-    void printDebug(const char* message);
-    
-private:
-    bool _initialized;
-    
-    // Состояние компонентов
-    bool _cameraReady;
-    bool _batteryReady;
-    bool _photoResistorsReady;
-    bool _lineSensorsReady;
-    bool _motorsReady;
-    bool _tofReady;
-    bool _lightSensorReady;
-    bool _ledsReady;
-    bool _buzzerReady;
-    
-    // Переменные для энкодеров
-    volatile int32_t _leftEncoderCount;
-    volatile int32_t _rightEncoderCount;
-    
-    // I2C объект
-    TwoWire* _i2c;
-    
-    // Внутренние функции
-    void _setupI2C();
-    void _setupEncoderInterrupts();
-    static void IRAM_ATTR _leftEncoderISR();
-    static void IRAM_ATTR _rightEncoderISR();
 };
 
-// Глобальный экземпляр
 extern RobotLibrary robot;
 
-#endif // ROBOT_LIBRARY_H
+#endif

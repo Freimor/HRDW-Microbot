@@ -1,73 +1,40 @@
 ```
-# Compiled and build artifacts
-*.o
-*.obj
-*.out
+# PlatformIO build artifacts
+.platformio/
+.piolibdeps/
+.sconsign.dblite
+.pioenvs/
+.piobuild/
+
+# Arduino/PlatformIO specific
+*.hex
+*.bin
+*.elf
+*.map
 
 # Dependencies
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.conda/
+lib/*/src/*.o
+lib/*/*.a
+lib/*/*.so
 
-# Logs and temp files
+# Build directories
+build/
+dist/
+*.build_log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
 *.log
-*.tmp
-*.swp
-*.swo
 
 # Environment
 .env
 .env.local
 *.env.*
-
-# Editors
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Coverage
-.coverage
-coverage/
-htmlcov/
-
-# Build systems
-dist/
-build/
-*.egg-info/
-.PHONY:
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
-*.lz4
-*.lzh
-*.cab
-*.arj
-*.rpm
-*.deb
-*.Z
-*.lz
-*.lzo
-*.tar.gz
-*.tar.bz2
-*.tar.xz
-*.tar.zst
 ```
