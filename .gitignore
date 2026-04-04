@@ -1,0 +1,61 @@
+```
+# Compiled and build artifacts
+*.o
+*.obj
+*.out
+build/
+dist/
+
+# Dependencies
+.pio/
+.platformio/
+lib/
+src/*/
+include/
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS specific
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Python specific (if applicable)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# C/C++ specific
+*.a
+*.la
+*.lo
+*.dylib
+*.dll
+*.so
+
+# Arduino specific
+*.hex
+*.elf
+*.bin
+```
