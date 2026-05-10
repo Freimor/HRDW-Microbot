@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "sw_with_addrled_symbol")(type "KiCad")(uri "/Users/Ricky/Downloads/sw_with_addrled_symbol.kicad_sym")(options "")(descr ""))
+)

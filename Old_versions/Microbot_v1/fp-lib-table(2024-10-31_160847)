@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "_microbot")(type "KiCad")(uri "${KIPRJMOD}/_microbot.pretty")(options "")(descr ""))
+)

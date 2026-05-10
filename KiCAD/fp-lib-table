@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "_Graphics&Connectors")(type "KiCad")(uri "${KIPRJMOD}/_Graphics&Connectors.pretty")(options "")(descr ""))
+)
